@@ -1,0 +1,6 @@
+@React_Redux_ASPdotNET_API.Server_HostAddress = http://localhost:5129
+
+GET {{React_Redux_ASPdotNET_API.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
