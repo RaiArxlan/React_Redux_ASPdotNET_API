@@ -9,11 +9,9 @@ function LoginComponent() {
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';
-
-
     return (
         <div>
-            <h2>Login</h2>
+            <h1>Login</h1>
             <form onSubmit={handleSubmit}>
                 <div>
                     <label>Email</label>

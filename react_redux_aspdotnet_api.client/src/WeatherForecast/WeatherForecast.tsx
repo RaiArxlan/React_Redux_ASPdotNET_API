@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './App.css';
+import './WeatherForecast.css';
 
 interface Forecast {
     date: string;
@@ -8,7 +8,7 @@ interface Forecast {
     summary: string;
 }
 
-function App() {
+function WeatherForecast() {
     const [forecasts, setForecasts] = useState<Forecast[]>();
 
     useEffect(() => {
@@ -53,4 +53,4 @@ function App() {
     }
 }
 
-export default App;
+export default WeatherForecast;
