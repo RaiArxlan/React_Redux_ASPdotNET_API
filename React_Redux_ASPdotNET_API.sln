@@ -3,9 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35201.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "React_Redux_ASPdotNET_API.Server", "React_Redux_ASPdotNET_API.Server\React_Redux_ASPdotNET_API.Server.csproj", "{6C1CC127-B1D8-45D4-B215-7CF2D99460FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "React_Redux_ASPdotNET_API.Server", "React_Redux_ASPdotNET_API.Server\React_Redux_ASPdotNET_API.Server.csproj", "{6C1CC127-B1D8-45D4-B215-7CF2D99460FA}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "react_redux_aspdotnet_api.client", "react_redux_aspdotnet_api.client\react_redux_aspdotnet_api.client.esproj", "{A1C91FFC-B2DA-4279-8F36-46ED61840936}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F38336D7-2779-4B83-9C81-FE87574E97BE}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

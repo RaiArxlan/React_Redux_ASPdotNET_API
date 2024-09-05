@@ -2,10 +2,16 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using React_Redux_ASPdotNET_API.Server.Data;
+using React_Redux_ASPdotNET_API.Server.Interfaces;
+using React_Redux_ASPdotNET_API.Server.Services;
+using System.Reflection;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseInMemoryDatabase("AppDb"));
 
@@ -53,10 +59,23 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
-// Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(opt =>
+{
+    opt.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "React_Redux_ASPdotNET_API",
+        Version = "v1",
+        Description = "A simple example ASP.NET Core Web API",
+    });
+
+    // Set the comments path for the Swagger JSON and UI.
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    opt.IncludeXmlComments(xmlPath);
+});
+builder.Services.AddSingleton<ITokenService, TokenService>();
 
 var app = builder.Build();
 
@@ -77,5 +96,17 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.MapFallbackToFile("/index.html");
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseDeveloperExceptionPage();
+    app.UseCors(builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+}
+
 
 await app.RunAsync();
