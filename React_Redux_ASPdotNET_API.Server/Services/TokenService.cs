@@ -108,14 +108,14 @@ namespace React_Redux_ASPdotNET_API.Server.Services
                 }
 
                 var emailClaim = tokenValidation?.Claims.FirstOrDefault(x => x.Key == ClaimTypes.Email);
-                if (emailClaim == null || !emailClaim.HasValue || emailClaim.Value.Value == null || string.IsNullOrEmpty(emailClaim?.Value.ToString()))
+                if (emailClaim == null || !emailClaim.HasValue || emailClaim.Value.Value == null || emailClaim.Value.Value is not string)
                 {
                     logger.LogError("Email claim not found in token");
 
                     return string.Empty;
                 }
 
-                return emailClaim.Value.ToString();
+                return (string)emailClaim.Value.Value;
 
 
             }

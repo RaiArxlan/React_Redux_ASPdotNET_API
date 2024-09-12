@@ -52,8 +52,6 @@ function LoginComponent() {
 
     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
-        console.log("login user...");
-
         // Call the API to register the user
         try {
 
@@ -70,7 +68,6 @@ function LoginComponent() {
             })
                 .then(response => {
                     if (response.ok) {
-                        console.log("User login successfully");
 
                         localStorage.setItem("email", email);
                         localStorage.setItem("isAuthenticated", 'true');

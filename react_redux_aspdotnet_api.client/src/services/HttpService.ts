@@ -18,7 +18,7 @@ async function refreshToken(): Promise<void> {
     // no need to store the token + refresh token, it's already stored in the browser cookie
 }
 
-async function fetchSecureEndpoint(url: string, options: RequestInit = {}, dispatch : Dispatch<UnknownAction> ): Promise<Response> {
+async function fetchWithAuth(url: string, options: RequestInit = {}, dispatch : Dispatch<UnknownAction> ): Promise<Response> {
     const response = await fetch(url, { ...options });
 
     if (response.status === 401) {
@@ -48,4 +48,4 @@ async function fetch(url: string, options: RequestInit = {}): Promise<Response> 
     }
 }
 
-export { fetch, fetchSecureEndpoint as fetchWithAuth };
+export { fetch, fetchWithAuth };

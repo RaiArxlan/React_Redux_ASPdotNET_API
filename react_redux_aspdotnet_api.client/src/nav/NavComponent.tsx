@@ -2,6 +2,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { RootState } from "../store";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from '../reducers/UserReducer';
+import './nav.css';
 
 const NavComponent = () => {
     const counter = useSelector((state: RootState) => state.counter.counter);
@@ -13,19 +14,19 @@ const NavComponent = () => {
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container-fluid">
-                <Link className="navbar-brand" to="/">Home</Link>
+                <Link className={`navbar-brand ${location.pathname === '/' ? ' active ' :''}`} to="/">Home</Link>
                 {user.isLoggedIn && (
                     <>
-                        <Link className="nav-link" to="/products">Products</Link>
+                        <Link className={`nav-link ${location.pathname === '/products' ? ' active ' :''}`} to="/products" >Products</Link>
                     </>
                 )}
                 {!user.isLoggedIn && (
                     <>
-                        <Link className="nav-link" to="/login">Login</Link>
-                        <Link className="nav-link" to="/register">Register</Link>
+                        <Link className={`nav-link ${location.pathname === '/login' ? ' active ' :''}`}  to="/login">Login</Link>
+                        <Link className={`nav-link ${location.pathname === '/register' ? ' active ' :''}`}  to="/register">Register</Link>
                     </>
                 )}
-                <Link className="nav-link" to="/countercomponent">Counter '{counter}' </Link>
+                <Link className={`nav-link ${location.pathname === '/countercomponent' ? ' active ' :''}`}  to="/countercomponent">Counter '{counter}' </Link>
                 {user.isLoggedIn && (
                     <>
                         <button className="nav-link" onClick={() => {

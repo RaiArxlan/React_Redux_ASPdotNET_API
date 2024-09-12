@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { fetchWithAuth } from '../services/HttpService.ts';
 import { useDispatch } from 'react-redux';
+import AddProduct from './AddProduct.tsx';
+import { Button } from 'react-bootstrap';
 
 interface Product {
     id: number,
@@ -11,11 +13,37 @@ interface Product {
 
 function ProductCatalog() {
     const [products, setProducts] = useState<Product[]>();
+    const [showModal, setShowModal] = useState(false);
+
+    const handleShow = () => {
+        setShowModal(true);
+    }
+
+    const handleClose = () => {
+        setShowModal(false);
+    }
+
     const dispatch = useDispatch();
 
     useEffect(() => {
-        populateProducts();
-    }, []);
+        if (!showModal) {
+            async function populateProducts() {
+                try {
+                    const response = await fetchWithAuth('/api/products/list', {}, dispatch);
+                    if (!response.ok) {
+                        setProducts([]);
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    const data = await response.json();
+
+                    setProducts(data);
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+            populateProducts();
+        }
+    }, [showModal, dispatch]);
 
     const contents = products === undefined
         ? <p><em>Loading... </em></p>
@@ -41,27 +69,22 @@ function ProductCatalog() {
         </table>;
 
     return (
-        <div>
-            <h1 id="tableLabel">Products</h1>
-            <p>This component demonstrates fetching data from the server.</p>
+        <>
+            <div className="row">
+                <div className="col-md-9 col-sm-12">
+                    <h1>Products</h1>
+                </div>
+                <div className="col-md-3 col-sm-12">
+                    <Button type="button" className="btn btn-primary" data-toggle="modal" onClick={handleShow}>
+                        Add Product
+                    </Button>
+                </div>
+            </div>
             {contents}
-        </div>
+            <AddProduct show={showModal} handleClose={handleClose} />
+        </>
     );
-
-    async function populateProducts() {
-        try {
-            const response = await fetchWithAuth('/api/products/list', {}, dispatch);
-            if (!response.ok) {
-                setProducts([]);
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = await response.json();
-
-            setProducts(data);
-        } catch (error) {
-            console.error(error);
-        }
-    }
 }
 
 export default ProductCatalog;
+export type { Product };

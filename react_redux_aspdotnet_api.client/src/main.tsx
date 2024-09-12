@@ -17,16 +17,18 @@ createRoot(document.getElementById('root')!).render(
         <Provider store={store}>
             <BrowserRouter>
                 <NavComponent />
-                <Routes>
-                    <Route path="/" element={<WeatherForecast />} />
-                    <Route path="/login" Component={LoginComponent} />
-                    <Route path="/register" Component={RegisterComponent} />
-                    <Route path="/products" Component={withAuth(ProductCatalog)} />
-                    <Route path="/countercomponent" Component={CounterComponent} />"
+                <div className="container mt-2">
+                    <Routes>
+                        <Route path="/" element={<WeatherForecast />} />
+                        <Route path="/login" Component={LoginComponent} />
+                        <Route path="/register" Component={RegisterComponent} />
+                        <Route path="/products" Component={withAuth(ProductCatalog)} />
+                        <Route path="/countercomponent" Component={CounterComponent} />"
 
-                    // Redirect to home if no route matches
-                    <Route path="*" element={<Navigate to="/" />} />
-                </Routes>
+                        // Redirect to home if no route matches
+                        <Route path="*" element={<Navigate to="/" />} />
+                    </Routes>
+                </div>
             </BrowserRouter>
         </Provider>
     </StrictMode>,
