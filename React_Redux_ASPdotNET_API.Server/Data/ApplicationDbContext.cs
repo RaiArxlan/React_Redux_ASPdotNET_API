@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using React_Redux_ASPdotNET_API.Server.Models;
 
@@ -9,7 +8,7 @@ namespace React_Redux_ASPdotNET_API.Server.Data
     /// <summary>
     /// Application database context.
     /// </summary>
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         /// <summary>
         /// Default constructor, accepts options for the database setup

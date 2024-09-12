@@ -4,16 +4,14 @@ import { Navigate, useLocation } from 'react-router-dom';
 // The HOC as a function that returns a functional component
 const withAuth = <P extends object>(WrappedComponent: React.ComponentType<P>) => {
     return (props: P) => {
+
         const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
         const location = useLocation(); // Get current location for redirect
 
         useEffect(() => {
-            const login = localStorage.getItem('isAuthenticated') === 'true';
+            const isLoggedIn = localStorage.getItem('isAuthenticated') === 'true';
 
-            if (login)
-                setIsAuthenticated(true);
-            else
-                setIsAuthenticated(false);
+            setIsAuthenticated(isLoggedIn);
         }, []);
 
         if (isAuthenticated === null) {

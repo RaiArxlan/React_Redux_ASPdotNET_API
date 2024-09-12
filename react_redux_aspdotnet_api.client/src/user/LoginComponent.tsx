@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { login } from '../reducers/UserReducer';
+import { fetch } from '../services/HttpService';
 
 function LoginComponent() {
 
@@ -9,26 +12,45 @@ function LoginComponent() {
     const navigate = useNavigate();
     const location = useLocation();
     const from = location.state?.from?.pathname || '/';
+
+    const dispatch = useDispatch();
+
     return (
-        <div>
-            <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Email</label>
-                    <input type="text" value={email} onChange={e => setEmail(e.target.value)} />
+        <div className="container mt-5">
+            <div className="row justify-content-center">
+                <div className="col-md-6">
+                    <h1 className="text-center mb-4">Login</h1>
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            <label>Email</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Password</label>
+                            <input
+                                type="password"
+                                className="form-control"
+                                value={password}
+                                onChange={e => setPassword(e.target.value)}
+                            />
+                        </div>
+                        <button type="submit" className="btn btn-primary btn-block">Login</button>
+                        <div className="text-center mt-3">
+                            <a href="/register">Register</a>
+                        </div>
+                    </form>
                 </div>
-                <div>
-                    <label>Password</label>
-                    <input type="password" value={password} onChange={e => setPassword(e.target.value)} />
-                </div>
-                <button type="submit">Login</button>
-                <a href="/register">Register</a>
-            </form>
+            </div>
         </div>
     );
 
 
-     function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
         console.log("login user...");
 
@@ -52,9 +74,18 @@ function LoginComponent() {
 
                         localStorage.setItem("email", email);
                         localStorage.setItem("isAuthenticated", 'true');
+                        dispatch(login());
 
-                        // Redirect to home page
-                        navigate(from, { replace: true });
+                        // redirect to the page user was trying to access
+                        const redirectUrl = localStorage.getItem('redirectAfterLogin');
+                        if (redirectUrl) {
+                            localStorage.removeItem('redirectAfterLogin');
+                            navigate(redirectUrl, { replace: true });
+                            return;
+                        } else {
+                            // Redirect to page from location state or home
+                            navigate(from, { replace: true });
+                        }
                     } else {
                         console.log(response.statusText);
                         console.log("Failed to login user");

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { fetch } from '../services/HttpService';
 import './WeatherForecast.css';
 
 interface Forecast {

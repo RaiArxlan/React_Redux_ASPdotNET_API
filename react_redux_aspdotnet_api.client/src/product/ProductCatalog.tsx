@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import { fetchWithAuth } from '../services/HttpService.ts';
+import { useDispatch } from 'react-redux';
 
 interface Product {
     id: number,
@@ -9,6 +11,7 @@ interface Product {
 
 function ProductCatalog() {
     const [products, setProducts] = useState<Product[]>();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         populateProducts();
@@ -47,7 +50,7 @@ function ProductCatalog() {
 
     async function populateProducts() {
         try {
-            const response = await fetch('/api/products/list');
+            const response = await fetchWithAuth('/api/products/list', {}, dispatch);
             if (!response.ok) {
                 setProducts([]);
                 throw new Error(`HTTP error! status: ${response.status}`);

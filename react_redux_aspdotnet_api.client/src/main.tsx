@@ -1,6 +1,6 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
-import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import WeatherForecast from './WeatherForecast/WeatherForecast.tsx'
 import LoginComponent from './user/LoginComponent.tsx'
 import withAuth from './withAuth.tsx'
@@ -24,7 +24,7 @@ createRoot(document.getElementById('root')!).render(
                     <Route path="/products" Component={withAuth(ProductCatalog)} />
                     <Route path="/countercomponent" Component={CounterComponent} />"
 
-                // Redirect to home if no route matches
+                    // Redirect to home if no route matches
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
             </BrowserRouter>
