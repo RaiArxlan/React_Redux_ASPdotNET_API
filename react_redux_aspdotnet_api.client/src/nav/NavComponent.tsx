@@ -29,12 +29,17 @@ const NavComponent = () => {
                 <Link className={`nav-link ${location.pathname === '/countercomponent' ? ' active ' :''}`}  to="/countercomponent">Counter '{counter}' </Link>
                 {user.isLoggedIn && (
                     <>
-                        <button className="nav-link" onClick={() => {
-                            dispatch(logout());
-
-                           return navigate('/login', { state: { from: location } });
-
-                        }} >Logout</button>
+                        <div className="nav-item">
+                            <span className="navbar-text">Welcome {user.userEmail}</span>
+                            <button className="btn btn-link nav-link text-right" onClick={() => {
+                                dispatch(logout());
+                                
+                                return navigate('/login', { state: { from: location } });
+                
+                            }}>
+                                Logout
+                            </button>
+                        </div>
                     </>
                 )}
             </div>

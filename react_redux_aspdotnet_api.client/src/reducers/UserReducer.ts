@@ -2,10 +2,12 @@ import { createSlice } from '@reduxjs/toolkit';
 
 interface UserState {
     isLoggedIn: boolean;
+    userEmail : string;
 }
 
 const initialState: UserState = {
     isLoggedIn: localStorage.getItem('isAuthenticated') === 'true',
+    userEmail: localStorage.getItem('email') ?? ''
 };
 
 const UserReducer = createSlice({
@@ -15,6 +17,7 @@ const UserReducer = createSlice({
         login(state) {
             localStorage.setItem('isAuthenticated', 'true');
             state.isLoggedIn = true;
+            state.userEmail = localStorage.getItem('email') ?? '';
         },
         logout(state) {
             localStorage.removeItem('isAuthenticated');
